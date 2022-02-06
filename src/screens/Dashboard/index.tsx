@@ -16,35 +16,31 @@ import {
   HighlightCards,
   Transactions,
   Title,
-  TransactionsList,
   TransactionList,
 } from "./styles";
 
 export function Dashboard() {
   const data = [
     {
+      type: "positive",
       title: "Desenvolvimento de site",
       amount: "R$ 12.000,00",
-      category: { name: "vendas", icon: "dollar-sign" },
-      date: "13/04/2022",
+      category: { name: "Vendas", icon: "dollar-sign" },
+      date: "03/04/2022",
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
-      category: { name: "vendas", icon: "dollar-sign" },
-      date: "13/04/2022",
+      type: "negative",
+      title: "Hamburgueria Pizzy",
+      amount: "R$ 59,00",
+      category: { name: "Alimentação", icon: "coffee" },
+      date: "10/04/2022",
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
-      category: { name: "vendas", icon: "dollar-sign" },
-      date: "13/04/2022",
-    },
-    {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
-      category: { name: "vendas", icon: "dollar-sign" },
-      date: "13/04/2022",
+      type: "negative",
+      title: "Aluguel do apartamento",
+      amount: "R$ 1.200,00",
+      category: { name: "Casa", icon: "shopping-bag" },
+      date: "27/04/2022",
     },
   ];
   return (
@@ -91,7 +87,7 @@ export function Dashboard() {
           data={data}
           renderItem={({ item }) => <TransactionCard data={item} />}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: getBottomSpace()}}
+          contentContainerStyle={{ paddingBottom: getBottomSpace() }}
         />
       </Transactions>
     </Container>
