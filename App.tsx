@@ -11,6 +11,7 @@ import {
 
 import theme from "./src/global/styles/theme";
 import { Dashboard } from "./src/screens/Dashboard";
+import { StatusBar } from "react-native";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
