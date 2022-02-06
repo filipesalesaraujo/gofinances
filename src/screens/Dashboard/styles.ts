@@ -66,7 +66,7 @@ export const HighlightCards = styled.ScrollView.attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
 })`
-width: 100%;
-position: absolute;
-margin-top: ${RFPercentage(20)}px;
+  width: 100%;
+  position: absolute;
+  margin-top: ${RFPercentage(20)}px;
 `;
