@@ -11,12 +11,12 @@ import {
   UserGreeting,
   UserName,
   Icon,
+  HighlightCards,
 } from "./styles";
 
 export function Dashboard() {
   return (
     <Container>
-      
       <Header>
         <UserWapper>
           <UserInfo>
@@ -32,8 +32,11 @@ export function Dashboard() {
         </UserWapper>
       </Header>
 
-      <HighlightCard />
-
+      <HighlightCards>
+        <HighlightCard />
+        <HighlightCard />
+        <HighlightCard />
+      </HighlightCards>
     </Container>
   );
 }
