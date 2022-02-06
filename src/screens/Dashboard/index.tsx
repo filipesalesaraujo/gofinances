@@ -3,19 +3,20 @@ import React from "react";
 import {
   Container,
   Header,
-  UserWarning,
+  UserWapper,
   UserInfo,
   Photo,
   User,
   UserGreeting,
   UserName,
+  Icon,
 } from "./styles";
 
 export function Dashboard() {
   return (
     <Container>
       <Header>
-        <UserWarning>
+        <UserWapper>
           <UserInfo>
             <Photo
               source={{ uri: "https://github.com/filipesalesaraujo.png" }}
@@ -25,7 +26,8 @@ export function Dashboard() {
               <UserName>Filipe</UserName>
             </User>
           </UserInfo>
-        </UserWarning>
+          <Icon name="power" />
+        </UserWapper>
       </Header>
     </Container>
   );
