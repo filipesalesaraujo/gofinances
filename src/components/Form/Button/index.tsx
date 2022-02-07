@@ -1,6 +1,7 @@
 import React from "react";
-import { Container, Title } from "./styles";
 import { TouchableOpacityProps } from "react-native";
+
+import { Container, Title } from "./styles";
 
 interface Props extends TouchableOpacityProps {
   title: string;
