@@ -23,15 +23,15 @@ export default function App() {
     return <AppLoading />;
   }
   return (
-    <ThemeProvider theme={theme}>
-      <StatusBar
-        backgroundColor="transparent"
-        translucent
-        barStyle="light-content"
-      />
-      <NavigationContainer>
-        <AppRoutes />
-      </NavigationContainer>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <StatusBar
+          backgroundColor="transparent"
+          translucent
+          barStyle="light-content"
+        />
+        <NavigationContainer>
+          <AppRoutes />
+        </NavigationContainer>
+      </ThemeProvider>
   );
 }
