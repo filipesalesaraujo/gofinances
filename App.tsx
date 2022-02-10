@@ -9,6 +9,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { LogBox } from "react-native";
 
 import theme from "./src/global/styles/theme";
 import { AppRoutes } from "./src/routes/app.routes";
@@ -23,15 +24,18 @@ export default function App() {
     return <AppLoading />;
   }
   return (
-      <ThemeProvider theme={theme}>
-        <StatusBar
-          backgroundColor="transparent"
-          translucent
-          barStyle="light-content"
-        />
-        <NavigationContainer>
-          <AppRoutes />
-        </NavigationContainer>
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <StatusBar
+        backgroundColor="transparent"
+        translucent
+        barStyle="light-content"
+      />
+      <NavigationContainer>
+        <AppRoutes />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+]);
