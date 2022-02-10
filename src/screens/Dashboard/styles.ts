@@ -10,7 +10,10 @@ import {
 import { Platform } from "react-native";
 
 import { DataListProps } from ".";
-import { BorderlessButton, GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  BorderlessButton,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 
 export const Container = styled(GestureHandlerRootView)`
   flex: 1;
@@ -101,3 +104,9 @@ export const TransactionList = styled(
   showsVerticalScrollIndicator: false,
   contentContainerStyle: { paddingBottom: 10 },
 })``;
+
+export const LoadContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
