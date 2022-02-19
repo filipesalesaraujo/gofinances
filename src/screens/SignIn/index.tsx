@@ -1,6 +1,30 @@
 import React from "react";
-import { Container } from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
+
+ import AppleSvg from "../../assets/apple.svg";
+ import GoogleSvg from "../../assets/google.svg";
+ import LogoSvg from '../../assets/logo.svg';
+
+import {
+  Container,
+  Header,
+  TitleWrapper,
+  Title,
+  SignInTitle,
+  Footer,
+} from "./styles";
 
 export function SignIn() {
-  return <Container></Container>;
+  return (
+    <Container>
+      <Header>
+        <TitleWrapper>
+          <LogoSvg width={RFValue(200)} height={RFValue(200)} />
+          <Title>Controle suas finanças de forma muito simples</Title>
+        </TitleWrapper>
+        <SignInTitle>Faça seu logim com uma das contas abaixo</SignInTitle>
+        <Footer></Footer>
+      </Header>
+    </Container>
+  );
 }
