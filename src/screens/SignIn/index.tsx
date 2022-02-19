@@ -19,12 +19,12 @@ export function SignIn() {
     <Container>
       <Header>
         <TitleWrapper>
-          <LogoSvg width={RFValue(200)} height={RFValue(200)} />
-          <Title>Controle suas finanças de forma muito simples</Title>
+          <LogoSvg width={RFValue(120)} height={RFValue(68)} />
+          <Title>Controle suas {'\n'} finanças de forma {'\n'} muito simples</Title>
         </TitleWrapper>
-        <SignInTitle>Faça seu logim com uma das contas abaixo</SignInTitle>
-        <Footer></Footer>
+        <SignInTitle>Faça seu logim com {'\n'}uma das contas abaixo</SignInTitle>
       </Header>
+        <Footer />
     </Container>
   );
 }
