@@ -36,7 +36,7 @@ export const Footer = styled.View`
   height: 30%;
   background-color: ${({ theme }) => theme.colors.secondary.main};
 `;
-export const FooterWeapper = styled.View`
+export const FooterWrapper = styled.View`
   margin-top: ${RFPercentage(-4)}px;
   padding: 0 32px;
   justify-content: space-between;
