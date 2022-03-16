@@ -1,6 +1,6 @@
 ## Sobre o projeto
 
-O projeto tem como objetivo o estudo e desenvolvimento de uma aplicação em React Native com Exop para ajudar no gerenciamento das finanças.
+O projeto tem como objetivo o estudo e desenvolvimento de uma aplicação em React Native com Expo para ajudar no gerenciamento das finanças.
 
 A aplicação foi desenvolvida utilizando React Native, Expo, TypeScript, Styled Components, Async Storage, React Hook Form, AuthSession e Expo Bare Workflow.
 
