@@ -1,18 +1,24 @@
-import React, { useState } from "react";
-import { Keyboard, Modal, TouchableWithoutFeedback, Alert } from "react-native";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import uuid from "react-native-uuid";
+import React, { useState } from 'react';
+import {
+  Modal,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert
+} from 'react-native';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
-import { useForm } from "react-hook-form";
-import { useNavigation } from "@react-navigation/native";
+import { useForm } from 'react-hook-form';
+import { useNavigation } from '@react-navigation/native';
 
-import { Button } from "../../components/Form/Button";
-import { CategorySelectButton } from "../../components/Form/CategorySelectButton";
-import { InputForm } from "../../components/Form/InputForm";
-import { TransactionTypeButton } from "../../components/Form/TransactionTypeButton";
-import { CategorySelect } from "../CategorySelect";
+import { InputForm } from '../../components/Form/InputForm';
+import { Button } from '../../components/Form/Button';
+import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
+import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
+
+import { CategorySelect } from '../CategorySelect';
 
 import {
   Container,
@@ -20,59 +26,66 @@ import {
   Title,
   Form,
   Fields,
-  TransactionsTypes,
-} from "./styles";
+  TransactionsTypes
+} from './styles';
+import { useAuth } from '../../hooks/auth';
 
-type NavigationProps = {
-  navigate:(screen:string) => void;
+interface FormData {
+  name: string;
+  amount: string;  
 }
 
-export type FormData = {
-  [name: string]: any;
-};
-
 const schema = Yup.object().shape({
-  name: Yup.string().required("Nome é obrigatório"),
-  amount: Yup.number()
-    .typeError("Informa um valor númerico")
-    .positive("O valor não pode ser negativo")
-    .required("O valor é obrigatório"),
+  name: Yup
+  .string()
+  .required('Nome é obrigatório'),
+  amount: Yup
+  .number()
+  .typeError('Informe um valor númerico')
+  .positive('O valor não pode ser negativo')
+  .required('O valor é obrigatório'),
 });
 
-export function Register() {
-  const [category, setCategory] = useState({
-    key: "category",
-    name: "Categoria",
-  });
-  const navigation = useNavigation<NavigationProps>()
-  const [transactionType, setTransactionType] = useState("");
+export function Register(){
+  const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  
+  const [category, setCategory] = useState({
+    key: 'category',
+    name: 'Categoria'
+  });
+
+  const { user } = useAuth()
+  const navigation = useNavigation();
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema)
   });
 
-  function handleTransactionTypeSelect(type: "positive" | "negative") {
+  function handleTransactionsTypeSelect(type: 'positive' | 'negative'){
     setTransactionType(type);
   }
 
-  function handleOpenSelectCategoryModal() {
+  function handleOpenSelectCategoryModal(){
     setCategoryModalOpen(true);
   }
 
-  function handleCloseSelectCategoryModal() {
+  function handleCloseSelectCategoryModal(){
     setCategoryModalOpen(false);
   }
 
-  async function handleRegister(form: FormData) {
-    if (!transactionType) return Alert.alert("Selecione o tipo da transação");
-    if (category.key === "category")
-      return Alert.alert("Selecione uma categoria");
+  async function handleRegister(form: FormData){
+    if(!transactionType)
+      return Alert.alert('Selecione o tipo da transação');
+
+    if(category.key === 'category')
+      return Alert.alert('Selecione a categoria');
+
 
     const newTransaction = {
       id: String(uuid.v4()),
@@ -80,90 +93,99 @@ export function Register() {
       amount: form.amount,
       type: transactionType,
       category: category.key,
-      date: new Date(),
-    };
+      date: new Date()
+    }
+
     try {
-      const dataKey = "@gofinances:transactions";
+      const dataKey = `@gofinances:transactions_user${user.id}`;
+
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
-      const dataFormatted = [...currentData, newTransaction];
+
+      const dataFormatted = [
+        ...currentData,
+        newTransaction
+      ];
+
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+
       reset();
-      setTransactionType("");
-      setCategory({ key: "category", name: "Categoria" });
-      navigation.navigate("Listagem");
+      setTransactionType('');
+      setCategory({
+        key: 'category',
+        name: 'Categoria'
+      });
+
+      navigation.navigate('Listagem');
+      
     } catch (error) {
       console.log(error);
-      Alert.alert("Erro ao cadastrar");
+      Alert.alert("Não foi possível salvar");
     }
   }
-
-  // useEffect(() => {
-  //   async function loadData() {
-  //     const data = await AsyncStorage.getItem(dataKey);
-  //     console.log(JSON.parse(data!));
-  //   }
-  //   loadData();
-
-  //   async function removeAll() {
-  //     await AsyncStorage.removeItem(dataKey);
-  //   }
-  //   removeAll();
-  // }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
+
         <Header>
           <Title>Cadastro</Title>
         </Header>
+
         <Form>
           <Fields>
             <InputForm
-              control={control}
               name="name"
+              control={control}
               placeholder="Nome"
               autoCapitalize="sentences"
               autoCorrect={false}
               error={errors.name && errors.name.message}
             />
+
             <InputForm
-              control={control}
               name="amount"
+              control={control}
               placeholder="Preço"
               keyboardType="numeric"
               error={errors.amount && errors.amount.message}
             />
+
             <TransactionsTypes>
               <TransactionTypeButton
-                isActive={transactionType === "positive"}
-                onPress={() => handleTransactionTypeSelect("positive")}
                 type="up"
                 title="Income"
+                onPress={() => handleTransactionsTypeSelect('positive')}
+                isActive={transactionType === 'positive'}
               />
               <TransactionTypeButton
-                isActive={transactionType === "negative"}
-                onPress={() => handleTransactionTypeSelect("negative")}
                 type="down"
                 title="Outcome"
+                onPress={() => handleTransactionsTypeSelect('negative')}
+                isActive={transactionType === 'negative'}
               />
             </TransactionsTypes>
+
             <CategorySelectButton
-              onPress={handleOpenSelectCategoryModal}
               title={category.name}
+              onPress={handleOpenSelectCategoryModal}
             />
           </Fields>
-          <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
+
+          <Button
+            title="Enviar"
+            onPress={handleSubmit(handleRegister)}
+          />
         </Form>
+
         <Modal visible={categoryModalOpen}>
           <CategorySelect
-            key={category.key}
-            category={category}
-            setCategory={setCategory}
-            closeSelectCategory={handleCloseSelectCategoryModal}
+              category={category}
+              setCategory={setCategory}
+              closeSelectCategory={handleCloseSelectCategoryModal}
           />
         </Modal>
       </Container>
-    </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback>      
   );
 }
